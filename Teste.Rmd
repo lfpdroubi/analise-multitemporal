@@ -1,0 +1,57 @@
+---
+title: "Teste"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dtwSat)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+##2013
+
+```{r imagens_2013-2018}
+blue <- brick(list("IMAGENS\\2013.B2.tif", "IMAGENS\\2014.B2.tif", 
+                   "IMAGENS\\2015.B2.tif", "IMAGENS\\2016.B2.tif", 
+                   "IMAGENS\\2017.B2.tif", "IMAGENS\\2018.B2.tif"))
+green <- brick(list("IMAGENS\\2013.B3.tif", "IMAGENS\\2014.B3.tif", 
+                    "IMAGENS\\2015.B3.tif", "IMAGENS\\2016.B3.tif", 
+                    "IMAGENS\\2017.B3.tif", "IMAGENS\\2018.B3.tif"))
+red <- brick(list("IMAGENS\\2013.B4.tif", "IMAGENS\\2014.B4.tif", 
+                  "IMAGENS\\2015.B4.tif", "IMAGENS\\2016.B4.tif", 
+                  "IMAGENS\\2017.B4.tif", "IMAGENS\\2018.B4.tif"))
+```
+
+##copia_vigngnets
+
+```{r}
+timeline <- as.Date(c("2013-01-01", "2014-01-01", "2015-01-01", "2016-01-01", 
+                      "2017-01-01", "2018-01-01"))
+```
+
+
+```{r}
+rts <- twdtwRaster(blue, green,  red, timeline = timeline)
+```
+
+
+```{r}
+# Location and time range 
+ts_location <- data.frame(longitude = -52.391637, latitude = -26.871172, 
+                         from = "2013-01-01", to = "2018-01-01")
+prj_string <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+ts <- getTimeSeries(rts, y = ts_location, proj4string = prj_string)
+```
+
+
+```{r}
+plot(ts, type = "timeseries")
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
