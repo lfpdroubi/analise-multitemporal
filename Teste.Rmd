@@ -23,8 +23,8 @@ red <- brick(list("IMAGENS\\2013.B4.tif", "IMAGENS\\2014.B4.tif",
 
 
 ```{r}
-timeline <- as.Date(c("2013-01-01", "2014-01-01", "2015-01-01", "2016-01-01", 
-                      "2017-01-01", "2018-01-01"))
+timeline <- c("2013-01-01", "2014-01-01", "2015-01-01", "2016-01-01", 
+                      "2017-01-01", "2018-01-01")
 ```
 
 
@@ -37,8 +37,8 @@ rts <- twdtwRaster(blue, green,  red, timeline = timeline)
 # Location and time range 
 ts_location <- data.frame(longitude = -52.391637, latitude = -26.871172, 
                          from = "2013-01-01", to = "2018-01-01")
-prj_string <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
-ts <- getTimeSeries(rts, y = ts_location, proj4string = prj_string)
+proj_str <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+ts <- getTimeSeries(rts, y = ts_location, proj4string = proj_str)
 ```
 
 
@@ -47,8 +47,7 @@ plot(ts, type = "timeseries")
 ```
 
 ```{r}
-field_samples <- read.csv("samples.csv")
-proj_str <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+field_samples <- read.csv("samples_1.csv")
 ```
 
 ```{r}
